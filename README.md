@@ -11,7 +11,9 @@
 
 - 🤭 I'm 22 years old. Since June, 2023. haha
 - 😀 I like football and basketball, (hope programming...)
+- 😪 I stay at my hometown every Friday. Because I have no class.
+- 😨 My hometown is Gwacheon city, Gyeongi-do. So I have to get a bus and subway everyday to go to class.
+
 ```
 print("Hello likeLion CAU")
 ```
-
