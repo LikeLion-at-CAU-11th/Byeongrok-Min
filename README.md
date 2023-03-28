@@ -20,5 +20,12 @@ print("Hello likeLion CAU")
 
 ### Week3 task
 
+- standard
+<img width="1216" alt="week3-standard" src="https://user-images.githubusercontent.com/96538554/228159042-21b132d0-eeef-4ffb-a04f-666502d5d791.png">
+
+- challenge
+<img width="1221" alt="week4-challenge" src="https://user-images.githubusercontent.com/96538554/228159072-0b46d98e-c19a-4838-b95b-45874a388e30.png">
+
+
 
 
