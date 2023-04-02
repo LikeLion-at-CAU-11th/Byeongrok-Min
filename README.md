@@ -18,7 +18,4 @@
 print("Hello likeLion CAU")
 ```
 
-### Week3 task
-
-
 
