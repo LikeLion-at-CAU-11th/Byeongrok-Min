@@ -53,7 +53,8 @@ DJANGO_APPS = [
 ]
 
 PROJECT_APPS = [
-    'posts',
+    'posts', 
+    'accounts',
 ]
 
 THIRD_PARTY_APPS = [
@@ -145,3 +146,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'accounts.Member' # accounts App의 Member 모델을 사용한다. 적지 않으면 기본유저모델을 사용.
+
