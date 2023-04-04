@@ -17,5 +17,3 @@
 ```
 print("Hello likeLion CAU")
 ```
-
-
