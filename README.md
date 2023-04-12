@@ -17,3 +17,8 @@
 ```
 print("Hello likeLion CAU")
 ```
+
+## Week6 Standard Task
+
+- My URL : http://likelion-byeongrok.p-e.kr:8000/posts/post_all/
+
