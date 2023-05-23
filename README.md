@@ -25,3 +25,15 @@ print("Hello likeLion CAU")
 	- 모든 post 조회: posts/post_all/
 	- 특정 post 댓글 조회: posts/comment/<int:id>/
 
+## Week8 Task
+
+- 댓글 조회
+<img width="716" alt="Screen Shot 2023-05-23 at 9 15 59 PM" src="https://github.com/LikeLion-at-CAU-11th/Byeongrok-Min/assets/96538554/c5bc588d-18d6-47fc-8a84-d6c8f93d8698">
+
+- 댓글 생성
+<img width="689" alt="Screen Shot 2023-05-23 at 9 16 37 PM" src="https://github.com/LikeLion-at-CAU-11th/Byeongrok-Min/assets/96538554/28d5a666-1947-4c66-9a57-df777f4bb293">
+
+- 댓글 삭제
+<img width="707" alt="Screen Shot 2023-05-23 at 9 17 02 PM" src="https://github.com/LikeLion-at-CAU-11th/Byeongrok-Min/assets/96538554/5ef41128-7031-451a-902b-61d505126b95">
+
+
