@@ -226,7 +226,6 @@ class PostDetail(APIView):
         post = get_object_or_404(Post, id=id)
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-
-
+    
+class CommentDetail(APIView):
+    def get(self, request, id):

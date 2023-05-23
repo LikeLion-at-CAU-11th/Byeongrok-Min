@@ -2,6 +2,8 @@ from django.urls import path
 from posts.views import *
 
 urlpatterns = [
+    # [FBV일 때 urls.py 형식 | path('사용자url', 함수명, 별칭)]
+    
     # path('post_detail/<int:id>/', post_detail,),
     # path('post_all/', get_all_posts,),
     # path('new_post/', create_post, name="create_post"),
