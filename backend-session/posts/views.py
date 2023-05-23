@@ -7,8 +7,7 @@ import json
 from datetime import datetime
 
 # 8주차 DRF serializer -->
-from .serializers import PostSerializer
-from .serializers import CommentSerializer
+from .serializers import PostSerializer, CommentSerializer
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -230,6 +229,15 @@ class PostDetail(APIView):
     
 class CommentDetail(APIView):
     def get(self, request, id):
-        comment_all = Comment.objects.filter(post=id)
-        serializer = CommentSerializer
+        comments = Comment.objects.filter(post=id)
+        serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = PostSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_404_NOT_FOUND)
+
+    
