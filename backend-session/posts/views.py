@@ -6,9 +6,21 @@ import json
 # created_at 과제에서 시간 설정을 위한 모듈
 from datetime import datetime
 
+# 8주차 DRF serializer -->
+from .serializers import PostSerializer
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.http import Http404
+# <-- 8주차 
+
+
 # Django에서 views.py의 역할: 웹클라이언트의 요청을 받고, DB에서 데이터를 받아 응답하는 역할. 
 # 클라이언트가 post를 GET(READ), PATCH(UPDATE), DELETE(DELETE) 하고 싶다는 요청을 받는다.  
 # 클라이언트의 요청에 따라 DB(posts/model.py)에 접근하여 Json 형식으로 가공해 Response를 보낸다. 
+
+
 @require_http_methods(["GET", "PATCH", "DELETE"])
 def post_detail(request, id):
     if request.method == "GET":
@@ -57,8 +69,6 @@ def post_detail(request, id):
             "status": 200,
             "message": "게시물 삭제 성공"
         })
-
-
 
 @require_http_methods(["GET"]) #데코레이터. 아래 함수를 감싸는 함수로서 여기서는 GET 이외의 요청이 왔을 떄 오류 메시지를 전달한다. 
 def get_all_posts(request):
@@ -180,3 +190,42 @@ def get_posts_between(request):
         'message': '두 세션 사이에 생성된 게시글 조회 성공',
         'data': post_list # post_info를 담고 있는 post_list를 출력한다. 
     })
+
+# 8주차 [ModelSerializer]
+# PostList : 한번에 가져오거나 처리하는 클래스
+class PostList(APIView):
+    def post(self, request, format=None):
+        serializer = PostSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_404_NOT_FOUND)
+    
+    def get(self, request, format=None):
+        posts = Post.objects.all()
+        serializer = PostSerializer(posts, many=True) # 많은 값을 가져올 때는 다중값인 'many'를 True로 한다. 
+        return Response(serializer.data)
+    
+# PostDetail : 하나씩 처리하는 클래스
+class PostDetail(APIView):
+    def get(self, request, id):
+        post = get_object_or_404(Post, id=id)
+        serializer = PostSerializer(post)
+        return Response(serializer.data)
+    
+    # put은 전체를 수정, fetch는 일부를 수정할 때 사용하는 Http 메서드
+    def put(self, request, post_id):
+        post = get_object_or_404(Post, id = id)
+        serializer = PostSerializer(post, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, id):
+        post = get_object_or_404(Post, id=id)
+        post.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+class CommentDetail(APIView):
+    def get(self, request, id):
