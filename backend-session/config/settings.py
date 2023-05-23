@@ -77,7 +77,7 @@ MIDDLEWARE = [
 ]
 
 #CORS 설정
-
+# Adding CORS headers allows your resources to be accessed on other domains. 
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [ 
