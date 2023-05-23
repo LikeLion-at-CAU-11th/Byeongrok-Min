@@ -59,6 +59,7 @@ PROJECT_APPS = [
 
 THIRD_PARTY_APPS = [
     "corsheaders",
+    "rest_framework",
 ]
 
 
@@ -82,6 +83,7 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [ 
     "http://localhost:3000", # 리액트 포트 (클리아언트)
     "http://127.0.0.1:3000",
+    # "프론트 도메인 주소"
 ]
 
 ROOT_URLCONF = 'config.urls'
