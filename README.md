@@ -34,17 +34,23 @@ print("Hello likeLion CAU")
 
 
 
-
-
 ## Week8 Task
 
-- 댓글 조회
-<img width="716" alt="Screen Shot 2023-05-23 at 9 15 59 PM" src="https://github.com/LikeLion-at-CAU-11th/Byeongrok-Min/assets/96538554/c5bc588d-18d6-47fc-8a84-d6c8f93d8698">
+- 게시물의 댓글 모두 조회
+<img width="574" alt="Screen Shot 2023-05-23 at 9 59 11 PM" src="https://github.com/LikeLion-at-CAU-11th/Byeongrok-Min/assets/96538554/f64a748e-6514-4482-8063-e78f13832dd5">
 
 - 댓글 생성
-<img width="689" alt="Screen Shot 2023-05-23 at 9 16 37 PM" src="https://github.com/LikeLion-at-CAU-11th/Byeongrok-Min/assets/96538554/28d5a666-1947-4c66-9a57-df777f4bb293">
+<img width="583" alt="Screen Shot 2023-05-23 at 10 00 06 PM" src="https://github.com/LikeLion-at-CAU-11th/Byeongrok-Min/assets/96538554/e4b83ed2-73e4-4575-9cc9-84603b826437">
 
-- 댓글 삭제
-<img width="707" alt="Screen Shot 2023-05-23 at 9 17 02 PM" src="https://github.com/LikeLion-at-CAU-11th/Byeongrok-Min/assets/96538554/5ef41128-7031-451a-902b-61d505126b95">
+- id 댓글 조회
+<img width="571" alt="Screen Shot 2023-05-23 at 10 00 36 PM" src="https://github.com/LikeLion-at-CAU-11th/Byeongrok-Min/assets/96538554/7eb0aae0-eae2-40d3-9f32-9c66d0d4c8d5">
+
+
+- id 댓글 업데이트 (post 번호를 적어줘야 함.)
+<img width="578" alt="Screen Shot 2023-05-23 at 10 07 02 PM" src="https://github.com/LikeLion-at-CAU-11th/Byeongrok-Min/assets/96538554/9e399a88-f355-44c7-accf-9273a2b3590e">
+
+- id 댓글 삭제
+<img width="577" alt="Screen Shot 2023-05-23 at 10 01 14 PM" src="https://github.com/LikeLion-at-CAU-11th/Byeongrok-Min/assets/96538554/eb6348e5-e740-499c-9bbb-d9df0a4780c6">
+
 
 
