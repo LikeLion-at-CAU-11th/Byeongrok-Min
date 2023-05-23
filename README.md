@@ -24,6 +24,18 @@ print("Hello likeLion CAU")
 	- 특정 post 조회: posts/post_detail/<int:id>/
 	- 모든 post 조회: posts/post_all/
 	- 특정 post 댓글 조회: posts/comment/<int:id>/
+=======
+## 토이프로젝트
+
+### ERD
+<img width="362" alt="toy-erd" src="https://github.com/LikeLion-at-CAU-11th/Byeongrok-Min/assets/96538554/1a2e1b88-07b4-4398-80e1-e8bb1f254733">
+
+### API
+<img width="708" alt="toy-api" src="https://github.com/LikeLion-at-CAU-11th/Byeongrok-Min/assets/96538554/353a5081-3729-497d-9f1f-394ef8f4dfc5">
+
+
+
+
 
 ## Week8 Task
 
