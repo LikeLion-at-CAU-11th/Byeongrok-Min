@@ -24,7 +24,6 @@ print("Hello likeLion CAU")
 	- 특정 post 조회: posts/post_detail/<int:id>/
 	- 모든 post 조회: posts/post_all/
 	- 특정 post 댓글 조회: posts/comment/<int:id>/
-=======
 ## 토이프로젝트
 
 ### ERD
