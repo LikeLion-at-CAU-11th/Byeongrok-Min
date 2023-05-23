@@ -54,8 +54,7 @@ class PostDetail(APIView):
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
-
-class CommentClass(APIView):
+class CommentList(APIView):
     def post(self, request, id): # id 값을 가지는 게시물에 댓글 생성
         request.data["post"] = id
         serializer = CommentSerializer(data=request.data)
@@ -63,13 +62,27 @@ class CommentClass(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
-
+    
     def get(self, request, id): # id 값을 가지는 게시물의 모든 댓글을 조회
         comments = Comment.objects.filter(post=id)
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data)
     
-    def delete(self, request, id): # 여기서 id 값은 comment의 id 값. 내가 봐도 헷갈리게 만들어놨다.. 분리할걸 ㅎㅎ
+class CommentDetail(APIView):
+    def get(self, request, id):
+        comment = get_object_or_404(Comment, id=id)
+        serializer = CommentSerializer(comment)
+        return Response(serializer.data)
+    
+    def put(self, request, id):
+        comment = get_object_or_404(Comment, id=id)
+        serializer = CommentSerializer(comment, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, id):
         comment = get_object_or_404(Comment, id=id)
         comment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
