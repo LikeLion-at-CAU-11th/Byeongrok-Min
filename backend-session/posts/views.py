@@ -86,3 +86,65 @@ class CommentDetail(APIView):
         comment = get_object_or_404(Comment, id=id)
         comment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+# week9
+
+# mixins view
+from rest_framework import mixins
+from rest_framework import generics
+
+# mixins는 generics 상속 받음
+# create 담당: mixins.CreateModelMixin
+# post는 id갑 부여해서 하는 게 아니라서 List 단에서 해주기
+class PosListMixins(mixins.ListModelMixin,  mixins.CreateModelMixin, generics.GenericAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request)
+    
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+# get 담당 : mixins.RetrieveModelMixin, udpate 담당: mixins.UpdateModelMixin , delete 담당: mixins.DestroyModelMixin
+class PostDetailMixins(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+    
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+    
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+    
+# genericsAPIView
+class PostListGenericAPIView(generics.ListCreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+class PostDetailGenericAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+# viewset
+from rest_framework import viewsets
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+# post_list = PostViewSet.as_view({
+#     'get': 'list',
+#     'post': 'create',
+# })
+
+# post_detail_vs = PostViewSet.as_view({
+#     'get': 'retrieve',
+#     'put': 'update',
+#     'patch': 'partial_update',
+#     'delete': 'destroy'
+# })
+
+
