@@ -1,5 +1,8 @@
 import os,json
 
+# 시간을 저장하는 객체를 만드는 라이브러리
+from datetime import timedelta
+
 """
 Django settings for config project.
 
@@ -60,10 +63,12 @@ PROJECT_APPS = [
 THIRD_PARTY_APPS = [
     "corsheaders",
     "rest_framework",
+    "rest_framework_simplejwt",
 ]
 
-
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -165,5 +170,32 @@ ALLOWED_HOSTS = [
     '*',
 ] 
 
+# JWT
+
+# 여러 REST_FRAMEWORK를 추가할 수 있음
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES' : (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+REST_USE_JWT = True
+
+SIMPLE_JWT = {
+    # 액세스 토큰 유효기간을 3시간으로 설정
+    'ACCESS_TOKEN_LIFETIME' : timedelta(hours=3),
+
+    # 리프레시 토큰 유혀기간을 1주일로 설정
+    'REFRESH_TOKEN_LIFETIME' : timedelta(days = 7),
+
+    # 새로운 엑세스 토큰과 리프레시 토큰 반환
+    'ROTATE_REFRESH_TOKENS': False,
+
+    # 같은 리프레시 토큰이 반환되지 않도록 하는 옵션
+    'BLACKLIST_AFTER_ROTATION': False, 
+
+    # JWT 인증에 사용할 사용자 클래스를 연결
+    'TOKEN_USER_CLASS' : 'accounts.Member',
+}
 
 
