@@ -17,6 +17,7 @@ from django.http import Http404
 
 # JWT 인가 구현
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 
 
 # Django에서 views.py의 역할: 웹클라이언트의 요청을 받고, DB에서 데이터를 받아 응답하는 역할. 
@@ -32,8 +33,9 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 class PostList(APIView):
     # 로그인 한 사용자 -> 게시물 작성 읽기 가능
-    # 로그인 안 한 사용자 -> 
+    # 로그인 안 한 사용자 -> 게시물 읽기만 가능
     permission_classes = [IsAuthenticatedOrReadOnly]
+    # permission_classes = [IsAuthenticated] # 로그인 안 하면 모든 권한 없음
     
     def get(self, request, format=None):
         posts = Post.objects.all()

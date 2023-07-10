@@ -64,7 +64,7 @@ class AuthView(APIView):
                 
                 return res
             else:
-                return Response(serialzer.errors, status=status.HTTP_400_BAD_REQUEST)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             
         def delete(self, request):
             res = Response({

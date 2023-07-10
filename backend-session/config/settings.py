@@ -60,10 +60,11 @@ PROJECT_APPS = [
     'accounts',
 ]
 
+# pip install을 통해 제3자 라이브러리를 다운로드를 받았을 때는 꼭 추가해주자
 THIRD_PARTY_APPS = [
-    "corsheaders",
-    "rest_framework",
-    "rest_framework_simplejwt",
+    "corsheaders", #  Cross-Origin Resource Sharing (CORS)를 지원하기 위한 라이브러리, 다른 도메인으로부터 온 리소스의 접근을 제한
+    "rest_framework", # drf
+    "rest_framework_simplejwt", # jwt 토큰
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
