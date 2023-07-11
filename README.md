@@ -51,5 +51,8 @@ print("Hello likeLion CAU")
 - id 댓글 삭제
   <img width="577" alt="Screen Shot 2023-05-23 at 10 01 14 PM" src="https://github.com/LikeLion-at-CAU-11th/Byeongrok-Min/assets/96538554/eb6348e5-e740-499c-9bbb-d9df0a4780c6">
 
-## Week10 Task
+<img width="577" alt="Screen Shot 2023-05-23 at 10 01 14 PM" src="https://github.com/LikeLion-at-CAU-11th/Byeongrok-Min/assets/96538554/eb6348e5-e740-499c-9bbb-d9df0a4780c6">
+
+## Week9 Task (주석)
+<img width="957" alt="annot" src="https://github.com/LikeLion-at-CAU-11th/Byeongrok-Min/assets/96538554/822daaa4-04db-4885-81ee-929435555b94">
 
