@@ -6,4 +6,8 @@ class Member(AbstractUser):
     age = models.IntegerField(verbose_name="나이",default=20, null=True) # verbose_name은 필수는 아니지만 가독성을 위해 명시해주면 좋다. 
     #기본 모델을 상속하고 age 필드를 추가함. 
     # null = True --> 사용자 입력이 필수는 아님. 
-    # char 필드 속성을 사용하려면 max_length 지정해줘야 한다. 
+    # char 필드 속성을 사용하려면 max_length 지정해줘야 한다.
+
+    # Member(사용자)와 Post(게시글)의 관계는 일대다 관게
+
+    
