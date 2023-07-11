@@ -19,6 +19,8 @@ from django.http import Http404
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.permissions import IsAuthenticated
 
+from config.permissions import IsWriterOrReadOnly
+
 
 # Django에서 views.py의 역할: 웹클라이언트의 요청을 받고, DB에서 데이터를 받아 응답하는 역할. 
 # 클라이언트가 post를 GET(READ), PATCH(UPDATE), DELETE(DELETE) 하고 싶다는 요청을 받는다.  
@@ -50,6 +52,8 @@ class PostList(APIView):
     
 # PostDetail : 하나씩 처리하는 클래스
 class PostDetail(APIView):
+    permission_classes = [IsWriterOrReadOnly]
+
     def get(self, request, id):
         post = get_object_or_404(Post, id=id)
         serializer = PostSerializer(post)
