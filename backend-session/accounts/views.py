@@ -4,8 +4,21 @@ from rest_framework.response import Response
 from rest_framework import status
 from accounts.serializers import RegisterSerializer
 from accounts.serializers import AuthSerializer
-import os
+import os, json
 
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
+secret_file = os.path.join(BASE_DIR, 'secrets.json') # secrets.json 파일 위치를 명시
+
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
+
+def get_secret(setting, secrets=secrets):
+    try:
+        return secrets[setting]
+    except KeyError:
+        error_msg = "Set the {} environment variable".format(setting)
+        raise ImproperlyConfigured(error_msg)
 class RegisterView(APIView):
     serializer_class = RegisterSerializer
 
@@ -88,10 +101,10 @@ GOOGLE_CALLBACK_URI = BASE_URL + 'accounts/google/callback/'
 # 2) 구글 로그인
 def google_login(request):
     # 구글에서 [범위] 단계에서 추가한 uri
-    scope = "https://www.googleapis.com/auth/userinfo.email " + \
-            "https://www.googleapis.com/auth/calendar.calendarlist.readonly"
+    scope = "https://www.googleapis.com/auth/userinfo.email"
+            # "https://www.googleapis.com/auth/calendar.calendarlist.readonly" // 구글 캘린더 API
     # 구글에서 발급받은 클라이언트 id
-    client_id = '635566788389-m46kptav8oafmrbjivfi8sv0ojj2thdq.apps.googleusercontent.com'
+    client_id = get_secret("CLIENT_ID")
     return redirect(f"https://accounts.google.com/o/oauth2/v2/auth?client_id={client_id}&response_type=code&redirect_uri={GOOGLE_CALLBACK_URI}&scope={scope}")
 
 # 3)  access token & 이메일 요청 -> 회원가입/로그인 & jwt 발급 
@@ -102,8 +115,8 @@ from .models import *
 from allauth.socialaccount.models import SocialAccount
 
 def google_callback(request):
-    client_id = '635566788389-m46kptav8oafmrbjivfi8sv0ojj2thdq.apps.googleusercontent.com'
-    client_secret = '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'
+    client_id = get_secret("CLIENT_ID")
+    client_secret = get_secret("CLIENT_SECRET")
     code = request.GET.get('code')
     state = "random_state"
 
@@ -154,7 +167,7 @@ def google_callback(request):
 
         # 이미 Google로 제대로 가입된 유저 => 로그인 & 해당 우저의 jwt 발급
         data = {'access_token': access_token, 'code': code}
-        accept = requests.post(f"{BASE_URL}api/user/google/login/finish/", data=data)
+        accept = requests.post(f"{BASE_URL}accounts/google/login/finish/", data=data) # api/user/google/login/finish/로 되어 있었던 것을 수정함. 
         accept_status = accept.status_code
 
         # 뭔가 중간에 문제가 생기면 에러
@@ -168,7 +181,7 @@ def google_callback(request):
     except Member.DoesNotExist:
         # 전달받은 이메일로 기존에 가입된 유저가 아예 없으면 => 새로 회원가입 & 해당 유저의 jwt 발급
         data = {'access_token': access_token, 'code': code}
-        accept = requests.post(f"{BASE_URL}api/user/google/login/finish/", data=data)
+        accept = requests.post(f"{BASE_URL}accounts/google/login/finish/", data=data) # api/user -> accounts로 수정
         accept_status = accept.status_code
 
         # 뭔가 중간에 문제가 생기면 에러
