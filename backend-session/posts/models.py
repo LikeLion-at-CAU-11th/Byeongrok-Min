@@ -19,8 +19,8 @@ class Post(BaseModel):
     # 장고 : QuerySet ORM을 이용함. (Object Relational Mapping의 약어로 객체와 db를 매핑.)
     # 장고에서는 스키마 설정을 다르게 했을 때 마이그레이션(migration)으로 업데이트 해줘야 함. 
     id = models.AutoField(primary_key=True)
-    writer = models.CharField(verbose_name="작성자", max_length=30)
-    # writer = models.ForeignKey(to=Member, on_delete=models.CASCADE) 
+    # writer = models.CharField(verbose_name="작성자", max_length=30)
+    writer = models.ForeignKey(to=Member, on_delete=models.CASCADE) 
     content = models.TextField(verbose_name="내용")
     category = models.CharField(choices=CHOICES, max_length=20)
     # 사용자는 여러 개의 게시글을 작성할 수 있지만, 한 게시글은 한 명의 사용자가 작성

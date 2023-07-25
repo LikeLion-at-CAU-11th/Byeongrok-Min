@@ -52,16 +52,20 @@ class PostList(APIView):
     
 # PostDetail : 하나씩 처리하는 클래스
 class PostDetail(APIView):
-    permission_classes = [IsWriterOrReadOnly]
-
+    # 객체 수준에서 permission을 검사하는 함수가 별도로 필요
+    def get_object(self, id):
+        post = Post.objects.get(id=id)
+        self.check_object_permissions(self.request, post)
+        return post
+    
     def get(self, request, id):
-        post = get_object_or_404(Post, id=id)
+        post = Post.objects.get(id=id)
         serializer = PostSerializer(post)
         return Response(serializer.data)
     
     # put은 전체를 수정, fetch는 일부를 수정할 때 사용하는 Http 메서드
     def put(self, request, id):
-        post = get_object_or_404(Post, id = id)
+        post = Post.objects.get(id=id)
         serializer = PostSerializer(post, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -69,7 +73,7 @@ class PostDetail(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def delete(self, request, id):
-        post = get_object_or_404(Post, id=id)
+        post = Post.objects.get(id=id)
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
