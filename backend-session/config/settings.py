@@ -66,6 +66,8 @@ THIRD_PARTY_APPS = [
     # allauth.socialaccount.providers.{소셜로그인제공업체}
     # {소셜로그인제공업체} 부분에는 구글 외에도 카카오,네이버 추가 가능
     'allauth.socialaccount.providers.google',
+    #s3
+    'storages',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
@@ -209,4 +211,33 @@ SIMPLE_JWT = {
     'TOKEN_USER_CLASS' : 'accounts.Member',
 }
 
+# MySQL 연결
+DATABASES = {
+	'default': {
+		'ENGINE': 'django.db.backends.mysql',
+		'NAME': 'mydatabase', # RDS 
+		'USER': get_secret("DB_USER"), # RDS Username
+		'PASSWORD': get_secret("DB_SECRET"),
+		'HOST': get_secret("DB_HOST"), # localhost -> RDS 엔드포인트
+        # secrets.json에 쓰기
+		'PORT': '3306', # mysql은 3306 포트를 사용합니다
+	}
+}
+
+# AWS 권한 설정
+AWS_ACCESS_KEY_ID = get_secret('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = get_secret('AWS_SECRET_ACCESS_KEY')
+AWS_REGION = 'ap-northeast-2'
+
+# AWS S3 버킷 이름
+AWS_STORAGE_BUCKET_NAME = 'likelion-11'
+
+# AWS S3 버킷의 URL
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME,AWS_REGION)
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
