@@ -9,5 +9,3 @@ class Member(AbstractUser):
     # char 필드 속성을 사용하려면 max_length 지정해줘야 한다.
 
     # Member(사용자)와 Post(게시글)의 관계는 일대다 관게
-
-    
