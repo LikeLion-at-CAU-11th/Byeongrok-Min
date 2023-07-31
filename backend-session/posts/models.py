@@ -23,6 +23,7 @@ class Post(BaseModel):
     writer = models.ForeignKey(to=Member, on_delete=models.CASCADE) 
     content = models.TextField(verbose_name="내용")
     category = models.CharField(choices=CHOICES, max_length=20)
+    thumbnail = models.ImageField(verbose_name="썸네일") # S3에서 불러오기
     # 사용자는 여러 개의 게시글을 작성할 수 있지만, 한 게시글은 한 명의 사용자가 작성
 
 class Comment(BaseModel):
