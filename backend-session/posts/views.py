@@ -37,14 +37,18 @@ class PostList(APIView):
     # 로그인 한 사용자 -> 게시물 작성 읽기 가능
     # 로그인 안 한 사용자 -> 게시물 읽기만 가능
     permission_classes = [IsAuthenticatedOrReadOnly]
+    
     # permission_classes = [IsAuthenticated] # 로그인 안 하면 모든 권한 없음
     
     def get(self, request, format=None):
         posts = Post.objects.all()
         serializer = PostSerializer(posts, many=True) # 많은 값을 가져올 때는 다중값인 'many'를 True로 한다. 
         return Response(serializer.data)
+    
     def post(self, request, format=None):
+        request.data['writer'] = request.user.id    # 현재 로그인된 user
         serializer = PostSerializer(data = request.data)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
