@@ -37,14 +37,18 @@ class PostList(APIView):
     # 로그인 한 사용자 -> 게시물 작성 읽기 가능
     # 로그인 안 한 사용자 -> 게시물 읽기만 가능
     permission_classes = [IsAuthenticatedOrReadOnly]
+    
     # permission_classes = [IsAuthenticated] # 로그인 안 하면 모든 권한 없음
     
     def get(self, request, format=None):
         posts = Post.objects.all()
         serializer = PostSerializer(posts, many=True) # 많은 값을 가져올 때는 다중값인 'many'를 True로 한다. 
         return Response(serializer.data)
+    
     def post(self, request, format=None):
+        request.data['writer'] = request.user.id    # 현재 로그인된 user
         serializer = PostSerializer(data = request.data)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -109,116 +113,3 @@ class CommentDetail(APIView):
         comment = get_object_or_404(Comment, id=id)
         comment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
-# week9
-
-# mixins view
-
-# APIView와 달리 serializer를 각 Http 메서드마다 처리할 필요가 없음
-# from rest_framework import mixins
-# from rest_framework import generics
-
-# mixins는 generics 상속 받음
-# create 담당: mixins.CreateModelMixin
-# post는 id갑 부여해서 하는 게 아니라서 List 단에서 해주기
-# class PosListMixins(mixins.ListModelMixin,  mixins.CreateModelMixin, generics.GenericAPIView):
-#     queryset = Post.objects.all()
-#     serializer_class = PostSerializer
-
-#     def get(self, request, *args, **kwargs):
-#         return self.list(request)
-    
-#     def post(self, request, *args, **kwargs):
-#         return self.create(request, *args, **kwargs)
-# # get 담당 : mixins.RetrieveModelMixin, udpate 담당: mixins.UpdateModelMixin , delete 담당: mixins.DestroyModelMixin
-# class PostDetailMixins(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
-#     queryset = Post.objects.all()
-#     serializer_class = PostSerializer
-
-#     def get(self, request, *args, **kwargs):
-#         return self.retrieve(request, *args, **kwargs)
-    
-#     def put(self, request, *args, **kwargs):
-#         return self.update(request, *args, **kwargs)
-    
-#     def delete(self, request, *args, **kwargs):
-#         return self.destroy(request, *args, **kwargs)
-    
-# class CommentListMixins(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
-#     queryset = Comment.objects.all()
-#     serializer_class = CommentSerializer
-
-#     def get(self, request, *args, **kwargs):
-#         return self.list(request)
-    
-#     def put(self, request, *args, **kwargs):
-#         return self.create(request, *args, **kwargs)
-    
-# class CommentDetailMinxins(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
-#     queryset = Comment.objects.all()
-#     serializer_class = CommentSerializer
-
-#     def get(self, request, *args, **kwargs):
-#         return self.retrieve(request, *args, **kwargs)
-    
-#     def put(self, request, *args, **kwargs):
-#         return self.update(request, *args, **kwargs)
-    
-#     def delete(self, request, *args, **kwargs):
-#         return self.destroy(request, *args, **kwargs)
-    
-# # genericsAPIView
-
-# # generics는 APIView를 상속 받음
-# # 일반적인 CRUD를 빠르게 처리할 때 사용함
-
-# class PostListGenericAPIView(generics.ListCreateAPIView):
-#     queryset = Post.objects.all()
-#     serializer_class = PostSerializer
-
-# class PostDetailGenericAPIView(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Post.objects.all()
-#     serializer_class = PostSerializer
-
-# class CommetListGenericAPIView(generics.ListCreateAPIView):
-#     queryset = Comment.objects.all()
-#     serializer_class = CommentSerializer
-
-# class CommentDetailGenericAPIView(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Comment.objects.all()
-#     serializer_class = CommentSerializer
-
-# # viewset
-# from rest_framework import viewsets
-
-# class PostViewSet(viewsets.ModelViewSet):
-#     queryset = Post.objects.all()
-#     serializer_class = PostSerializer
-
-# class CommentViewSet(viewsets.ModelViewSet):
-#     queryset = Comment.objects.all()
-#     serializer_class = CommentSerializer
-
-# # post_list = PostViewSet.as_view({
-# #     'get': 'list',
-# #     'post': 'create',
-# # })
-
-# # post_detail_vs = PostViewSet.as_view({
-# #     'get': 'retrieve',
-# #     'put': 'update',
-# #     'patch': 'partial_update',
-# #     'delete': 'destroy'
-# # })
-
-# # comment_list = CommentViewSet.as_view({
-# #     'get': 'list',
-# #     'post': 'create',
-# # })
-
-# # comment_detail_vs = CommentViewSet.as_view({
-# #     'get': 'retrieve',
-# #     'put': 'update',
-# #     'patch': 'partial_update',
-# #     'delete': 'destroy'
-# # })
